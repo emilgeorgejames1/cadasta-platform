@@ -129,13 +129,8 @@ class XFormListView(OpenRosaHeadersMixin,
         for org in orgs:
             projects = org.projects.filter(archived=False)
             for project in projects:
-                try:
-                    questionnaire = Questionnaire.objects.get(
-                        id=project.current_questionnaire
-                    )
-                    forms.append(questionnaire)
-                except Questionnaire.DoesNotExist:
-                    pass
+                if project.current_questionnaire:
+                    forms.append(project.current_questionnaire)
         return forms
 
     def get_queryset(self):

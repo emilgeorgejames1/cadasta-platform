@@ -83,7 +83,7 @@ def create_attrs_schema(project, question_group_dict, attr_type_ids,
                         content_type, default_language='', errors=[]):
     fields = []
     selectors = (project.organization.pk, project.pk,
-                 project.current_questionnaire)
+                 project.current_questionnaire.id)
     # check if the attribute group has a relevant bind statement,
     # eg ${party_type}='IN'
     # this enables conditional attribute schema creation
@@ -259,7 +259,7 @@ class QuestionnaireManager(models.Manager):
 
                 instance.save()
 
-                project.current_questionnaire = instance.id
+                project.current_questionnaire = instance
 
                 create_children(
                     children=json.get('children'),

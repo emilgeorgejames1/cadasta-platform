@@ -63,7 +63,8 @@ class BaseImporterTest(UserTestCase, TestCase):
         assert val == 0.0
 
     def test_map_attrs_to_content_types_with_emoji(self):
-        project = ProjectFactory.create(current_questionnaire='123abc')
+        project = ProjectFactory.create()
+        q_factories.QuestionnaireFactory.create(project=self.project)
         content_type = ContentType.objects.get(
             app_label='party', model='party'
         )

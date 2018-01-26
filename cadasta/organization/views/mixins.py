@@ -120,7 +120,7 @@ class ProjectMixin:
 
         project = self.get_project()
         if project.current_questionnaire:
-            q = Questionnaire.objects.get(id=project.current_questionnaire)
+            q = project.current_questionnaire
             context['form_lang_default'] = q.default_language
 
             question = q.questions.filter(~Q(label_xlat={})).first()

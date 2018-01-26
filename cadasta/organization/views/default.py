@@ -428,8 +428,7 @@ class ProjectDashboard(PermissionRequiredMixin,
         exports = exports.filter(created_date__gte=last_week)[:5]
         context['recent_exports'] = exports
         try:
-            context['questionnaire'] = Questionnaire.objects.get(
-                id=self.object.current_questionnaire)
+            context['questionnaire'] = self.object.current_questionnaire
         except Questionnaire.DoesNotExist:
             pass
 
@@ -656,8 +655,7 @@ class ProjectEditDetails(ProjectEdit, generic.UpdateView):
         initial = super().get_initial()
 
         try:
-            questionnaire = Questionnaire.objects.get(
-                id=self.object.current_questionnaire)
+            questionnaire = self.object.current_questionnaire
             initial['questionnaire'] = questionnaire.xls_form.url
             initial['original_file'] = questionnaire.original_file
         except Questionnaire.DoesNotExist:
@@ -907,11 +905,11 @@ class ProjectDataImportWizard(mixins.ProjectMixin,
         allowed_tenure_types = get_types(
             'tenure_type',
             TENURE_RELATIONSHIP_TYPES,
-            questionnaire_id=project.current_questionnaire)
+            questionnaire_id=project.current_questionnaire.id)
         allowed_location_types = get_types(
             'location_type',
             TYPE_CHOICES,
-            questionnaire_id=project.current_questionnaire)
+            questionnaire_id=project.current_questionnaire.id)
 
         config_dict = {
             'project': project,

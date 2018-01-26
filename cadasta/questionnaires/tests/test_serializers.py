@@ -86,7 +86,7 @@ class QuestionnaireSerializerTest(UserTestCase, FileStorageTestCase, TestCase):
         serializer.save()
         assert Questionnaire.objects.count() == 1
         questionnaire = Questionnaire.objects.first()
-        assert project.current_questionnaire == questionnaire.id
+        assert project.current_questionnaire == questionnaire
         assert questionnaire.questions.count() == 2
 
     def test_invalid_deserialize_json(self):
@@ -231,7 +231,7 @@ class QuestionnaireSerializerTest(UserTestCase, FileStorageTestCase, TestCase):
             selectors=(
                 project.organization.id,
                 project.id,
-                project.current_questionnaire,
+                project.current_questionnaire.id,
             ),
             default_language='en')
         assert Attribute.objects.filter(schema=schema).count() == 1

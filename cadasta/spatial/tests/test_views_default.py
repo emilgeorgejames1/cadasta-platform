@@ -382,7 +382,7 @@ class LocationDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_incomplete_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         user = UserFactory.create()
@@ -393,7 +393,7 @@ class LocationDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         location_type_question = q_factories.QuestionFactory.create(
@@ -453,7 +453,7 @@ class LocationDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire_but_missing_option(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         q_factories.QuestionFactory.create(

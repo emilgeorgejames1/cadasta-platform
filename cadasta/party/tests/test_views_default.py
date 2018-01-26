@@ -96,7 +96,7 @@ class PartiesListTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         party_type_question = q_factories.QuestionFactory.create(
@@ -125,7 +125,7 @@ class PartiesListTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_incomplete_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         user = UserFactory.create()
@@ -351,7 +351,7 @@ class PartyDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_incomplete_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         user = UserFactory.create()
@@ -362,7 +362,7 @@ class PartyDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         q_factories.QuestionFactory.create(
@@ -453,7 +453,7 @@ class PartyDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire_but_missing_option(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         q_factories.QuestionFactory.create(
@@ -630,7 +630,7 @@ class PartiesEditTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_inclomplete_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         user = UserFactory.create()
@@ -641,7 +641,7 @@ class PartiesEditTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         party_type_question = q_factories.QuestionFactory.create(
@@ -1179,7 +1179,7 @@ class PartyRelationshipDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_incomplete_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         user = UserFactory.create()
@@ -1190,7 +1190,7 @@ class PartyRelationshipDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         tenure_type_question = q_factories.QuestionFactory.create(
@@ -1217,7 +1217,7 @@ class PartyRelationshipDetailTest(ViewTestCase, UserTestCase, TestCase):
 
     def test_get_with_questionnaire_but_missing_option(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
-        self.project.current_questionnaire = questionnaire.id
+        self.project.current_questionnaire = questionnaire
         self.project.save()
 
         q_factories.QuestionFactory.create(

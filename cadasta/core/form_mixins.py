@@ -48,7 +48,7 @@ class AttributeFormMixin(SchemaSelectorMixin):
     def set_standard_field(self, name, empty_choice=None, field_name=None):
         if not field_name:
             field_name = name
-        q = Questionnaire.objects.get(id=self.project.current_questionnaire)
+        q = self.project.current_questionnaire
         default_lang = q.default_language
         try:
             question = Question.objects.get(name=name, questionnaire=q)

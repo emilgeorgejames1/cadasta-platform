@@ -1,4 +1,5 @@
 from .default import *  # NOQA
+import os
 
 DEBUG = True
 
@@ -103,6 +104,7 @@ LOGGING = {
         },
         'django.db.backends': {
             'handlers': ['console'],
+            'level': 'DEBUG' if 'SILENT_DB' not in os.environ else 'ERROR'
         },
         'xform.submissions': {
             'handlers': ['file'],

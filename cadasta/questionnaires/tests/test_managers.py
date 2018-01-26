@@ -227,7 +227,7 @@ class QuestionnaireManagerTest(FileStorageTestCase, TestCase):
         assert model.title == 'Question types'
 
         assert m1.id != model.id
-        assert project.current_questionnaire == model.id
+        assert project.current_questionnaire == model
 
     def test_create_resource_in_group(self):
         create_attribute_types()

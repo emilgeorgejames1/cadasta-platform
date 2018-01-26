@@ -190,11 +190,11 @@ class Project(ResourceModelMixin, SlugModel, RandomIDModel):
     last_updated = models.DateTimeField(auto_now=True)
     extent = gismodels.PolygonField(null=True)
     access = models.CharField(
-        default="public", choices=ACCESS_CHOICES, max_length=8
-    )
-    current_questionnaire = models.CharField(
-        max_length=24, null=True, blank=True
-    )
+        default="public", choices=ACCESS_CHOICES, max_length=8)
+    # current_questionnaire = models.CharField(
+    #     max_length=24, null=True, blank=True)
+    current_questionnaire = models.OneToOneField(
+        'questionnaires.Questionnaire', null=True, blank=True)
     area = models.FloatField(default=0)
 
     tasks = GenericRelation(

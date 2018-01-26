@@ -85,9 +85,10 @@ class TenureRelationshipSerializer(
 
     def validate_tenure_type(self, value):
         prj = self.context['project']
-        allowed_types = get_types('tenure_type',
-                                  TENURE_RELATIONSHIP_TYPES,
-                                  questionnaire_id=prj.current_questionnaire)
+        allowed_types = get_types(
+            'tenure_type',
+            TENURE_RELATIONSHIP_TYPES,
+            questionnaire_id=prj.current_questionnaire.id)
 
         if value not in allowed_types:
             msg = "'{}' is not a valid choice for field 'tenure_type'."

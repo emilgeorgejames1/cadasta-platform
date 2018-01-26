@@ -689,10 +689,8 @@ class ProjectEditDetailsTest(UserTestCase, FileStorageTestCase, TestCase):
 
         project.refresh_from_db()
         assert project.name == data['name']
-        questionnaire = project.questionnaires.get(
-            id=project.current_questionnaire)
-        assert questionnaire.xls_form.url == data['questionnaire']
-        assert questionnaire.original_file == data['original_file']
+        assert project.current_questionnaire.xls_form.url == data['questionnaire']
+        assert project.current_questionnaire.original_file == data['original_file']
 
     def test_add_invalid_questionnaire(self):
         project = ProjectFactory.create()
@@ -739,9 +737,8 @@ class ProjectEditDetailsTest(UserTestCase, FileStorageTestCase, TestCase):
 
         project.refresh_from_db()
         assert project.name == data['name']
-        assert (project.questionnaires.get(
-            id=project.current_questionnaire
-        ).xls_form.url == data['questionnaire'])
+        q = project.current_questionnaire
+        assert q.xls_form.url == data['questionnaire']
 
     def test_replace_questionnaire_when_project_has_data(self):
         project = ProjectFactory.create()
@@ -800,7 +797,7 @@ class ProjectEditDetailsTest(UserTestCase, FileStorageTestCase, TestCase):
         form.save()
         project.refresh_from_db()
         assert project.name == data['name']
-        assert project.current_questionnaire == questionnaire.id
+        assert project.current_questionnaire.id == questionnaire.id
 
     def test_delete_questionnaire(self):
         project = ProjectFactory.create()

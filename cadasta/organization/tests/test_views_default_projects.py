@@ -963,9 +963,9 @@ class ProjectEditDetailsTest(ViewTestCase, UserTestCase,
     }
 
     def setup_models(self):
-        self.project = ProjectFactory.create(current_questionnaire='abc')
-        self.questionnaire = q_factories.QuestionnaireFactory.create(
-            project=self.project, id='abc')
+        self.questionnaire = q_factories.QuestionnaireFactory.create(id='abc')
+        self.project = ProjectFactory.create(
+            current_questionnaire=self.questionnaire)
 
     def setup_url_kwargs(self):
         return {
@@ -996,7 +996,7 @@ class ProjectEditDetailsTest(ViewTestCase, UserTestCase,
         user = UserFactory.create()
         assign_policies(user)
 
-        self.project.current_questionnaire = ''
+        self.project.current_questionnaire = None
         self.project.save()
 
         form = forms.ProjectEditDetails(instance=self.project)
@@ -1062,7 +1062,7 @@ class ProjectEditDetailsTest(ViewTestCase, UserTestCase,
         self.project.refresh_from_db()
         assert self.project.name == self.post_data['name']
         assert self.project.description == self.post_data['description']
-        assert self.project.current_questionnaire == ''
+        assert self.project.current_questionnaire == None
 
     def test_post_with_blocked_questionnaire_upload(self):
         SpatialUnitFactory.create(project=self.project)
@@ -1075,7 +1075,7 @@ class ProjectEditDetailsTest(ViewTestCase, UserTestCase,
         self.project.refresh_from_db()
         assert self.project.name != self.post_data['name']
         assert self.project.description != self.post_data['description']
-        assert self.project.current_questionnaire == 'abc'
+        assert self.project.current_questionnaire.id == 'abc'
 
     def test_post_empty_questionnaire_with_blocked_questionnaire_upload(self):
         SpatialUnitFactory.create(project=self.project)
@@ -1088,7 +1088,7 @@ class ProjectEditDetailsTest(ViewTestCase, UserTestCase,
         self.project.refresh_from_db()
         assert self.project.name == self.post_data['name']
         assert self.project.description == self.post_data['description']
-        assert self.project.current_questionnaire == 'abc'
+        assert self.project.current_questionnaire.id == 'abc'
 
     def test_post_invalid_form(self):
         question = self.get_form('xls-form-invalid')

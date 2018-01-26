@@ -55,8 +55,7 @@ class QuestionnaireDetail(APIPermissionRequiredMixin,
     def get_object(self):
         if not hasattr(self, 'object'):
             prj = self.get_project()
-            self.object = Questionnaire.objects.get(
-                id=prj.current_questionnaire)
+            self.object = prj.current_questionnaire
 
         return self.object
 

@@ -48,8 +48,8 @@ class Questionnaire(RandomIDModel):
     xls_form = S3FileField(upload_to='xls-forms')
     xml_form = S3FileField(upload_to='xml-forms', default=False)
     original_file = models.CharField(max_length=200, null=True)
-    project = models.ForeignKey('organization.Project',
-                                related_name='questionnaires')
+    # project = models.ForeignKey('organization.Project',
+    #                             related_name='+')
     version = models.BigIntegerField()
     md5_hash = models.CharField(max_length=50, default=False)
 
@@ -62,24 +62,26 @@ class Questionnaire(RandomIDModel):
     history = HistoricalRecords()
 
     class Meta:
-        unique_together = ('project', 'id_string', 'version')
+        # unique_together = ('project', 'id_string', 'version')
+        unique_together = ('id_string', 'version')
 
     class TutelaryMeta:
         perm_type = 'questionnaire'
-        path_fields = ('project', 'pk')
+        # path_fields = ('project', 'pk')
+        path_fields = ('pk',)
         actions = (
-            ('questionnaire.view',
-             {'description': _("View the questionnaire of the project"),
-              'error_message': messages.QUESTIONNAIRE_VIEW,
-              'permissions_object': 'project'}),
-            ('questionnaire.add',
-             {'description': _("Add a questionnaire to the project"),
-              'error_message': messages.QUESTIONNAIRE_ADD,
-              'permissions_object': 'project'}),
-            ('questionnaire.edit',
-             {'description': _("Edit an existing questionnaire"),
-              'error_message': messages.QUESTIONNAIRE_EDIT,
-              'permissions_object': 'project'}),
+        #     ('questionnaire.view',
+        #      {'description': _("View the questionnaire of the project"),
+        #       'error_message': messages.QUESTIONNAIRE_VIEW,
+        #       'permissions_object': 'project'}),
+        #     ('questionnaire.add',
+        #      {'description': _("Add a questionnaire to the project"),
+        #       'error_message': messages.QUESTIONNAIRE_ADD,
+        #       'permissions_object': 'project'}),
+        #     ('questionnaire.edit',
+        #      {'description': _("Edit an existing questionnaire"),
+        #       'error_message': messages.QUESTIONNAIRE_EDIT,
+        #       'permissions_object': 'project'}),
         )
 
     def __repr__(self):

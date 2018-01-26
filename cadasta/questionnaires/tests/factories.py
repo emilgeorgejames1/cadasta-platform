@@ -24,7 +24,7 @@ class QuestionnaireFactory(ExtendedFactory):
 
     @factory.post_generation
     def add_current_questionnaire(self, create, extracted, **kwargs):
-        self.project.current_questionnaire = self.id
+        self.project.current_questionnaire = self
         self.project.save()
 
 

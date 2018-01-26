@@ -53,14 +53,14 @@ class Search(tmixins.APIPermissionRequiredMixin, ProjectMixin, APIView):
         tenure_types = get_types(
             'tenure_type',
             TENURE_RELATIONSHIP_TYPES,
-            questionnaire_id=project.current_questionnaire,
+            questionnaire=project.current_questionnaire,
             include_labels=True)
         self.tenure_types = dict(tenure_types)
 
         spatial_types = get_types(
             'location_type',
             SPATIAL_TYPE_CHOICES,
-            questionnaire_id=project.current_questionnaire,
+            questionnaire=project.current_questionnaire,
             include_labels=True)
         self.spatial_types = dict(spatial_types)
 

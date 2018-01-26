@@ -16,7 +16,7 @@ class Exporter(SchemaSelectorMixin):
         tenure_types = get_types(
             'tenure_type',
             TENURE_RELATIONSHIP_TYPES,
-            questionnaire_id=project.current_questionnaire,
+            questionnaire_id=project.current_questionnaire.id,
             include_labels=True)
         self.tenure_type_choices = dict(tenure_types)
 

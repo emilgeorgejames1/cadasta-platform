@@ -61,7 +61,7 @@ class ModelHelper():
 
         project = questionnaire.project
 
-        if project.current_questionnaire != questionnaire.id:
+        if project.current_questionnaire != questionnaire:
             raise InvalidXMLSubmission(_('Form out of date'))
 
         parties, party_resources = self.create_party(

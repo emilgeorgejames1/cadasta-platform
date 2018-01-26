@@ -125,7 +125,7 @@ class QuestionnaireDetailTest(APITestCase, UserTestCase,
         assert Questionnaire.objects.filter(project=self.prj).count() == 1
         assert response.content['title'] == data['title']
         self.prj.refresh_from_db()
-        assert self.prj.current_questionnaire == response.content['id']
+        assert self.prj.current_questionnaire.id == response.content['id']
 
     def test_create_invalid_questionnaire_from_json(self):
         data = {

@@ -323,7 +323,7 @@ class TenureRelationship(ResourceModelMixin,
             return dict(TENURE_RELATIONSHIP_TYPES)[self.tenure_type]
 
         question = Question.objects.get(
-            questionnaire_id=self.project.current_questionnaire,
+            questionnaire=self.project.current_questionnaire,
             name='tenure_type'
         )
         label = question.options.get(name=self.tenure_type).label_xlat

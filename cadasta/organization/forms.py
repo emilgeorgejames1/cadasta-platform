@@ -393,7 +393,7 @@ class ProjectEditDetails(SanitizeFieldsForm, forms.ModelForm):
                     project=self.instance
                 )
         elif new_form is not None and not self.instance.has_records:
-            self.instance.current_questionnaire = ''
+            self.instance.current_questionnaire = None
 
         return super().save(*args, **kwargs)
 

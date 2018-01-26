@@ -30,7 +30,7 @@ class PartiesList(LoginPermissionRequiredMixin,
             try:
                 party_type = Question.objects.get(
                     name='party_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 party_opts = QuestionOption.objects.filter(question=party_type)
                 party_opts = dict(party_opts.values_list('name', 'label_xlat'))
 
@@ -85,7 +85,7 @@ class PartiesDetail(LoginPermissionRequiredMixin,
             try:
                 name = Question.objects.get(
                     name='party_name',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 context['name_labels'] = template_xlang_labels(name.label_xlat)
             except Question.DoesNotExist:
                 pass
@@ -93,7 +93,7 @@ class PartiesDetail(LoginPermissionRequiredMixin,
             try:
                 party_type = Question.objects.get(
                     name='party_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 context['type_labels'] = template_xlang_labels(
                     party_type.label_xlat)
             except Question.DoesNotExist:
@@ -111,7 +111,7 @@ class PartiesDetail(LoginPermissionRequiredMixin,
             try:
                 tenure_type = Question.objects.get(
                     name='tenure_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 tenure_opts = QuestionOption.objects.filter(
                     question=tenure_type)
                 tenure_opts = dict(tenure_opts.values_list(
@@ -122,7 +122,7 @@ class PartiesDetail(LoginPermissionRequiredMixin,
             try:
                 location_type = Question.objects.get(
                     name='location_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 location_opts = QuestionOption.objects.filter(
                     question=location_type)
                 location_opts = dict(
@@ -168,7 +168,7 @@ class PartiesEdit(LoginPermissionRequiredMixin,
             try:
                 party_type = Question.objects.get(
                     name='party_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 option = QuestionOption.objects.get(question=party_type,
                                                     name=context['party'].type)
                 context['type_choice_labels'] = template_xlang_labels(
@@ -241,7 +241,7 @@ class PartyRelationshipDetail(LoginPermissionRequiredMixin,
             try:
                 tenure_type = Question.objects.get(
                     name='tenure_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 context['type_labels'] = template_xlang_labels(
                     tenure_type.label_xlat)
             except Question.DoesNotExist:

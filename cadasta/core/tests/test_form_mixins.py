@@ -43,7 +43,8 @@ class MockAttributeModelForm(form_mixins.AttributeModelForm):
 class AttributeFormMixinTest(UserTestCase, FileStorageTestCase, TestCase):
 
     def setUp(self):
-        self.project = ProjectFactory.create(current_questionnaire='abc1')
+        self.project = ProjectFactory.create()
+        q_factories.QuestionnaireFactory.create(project=self.project)
 
         content_type = ContentType.objects.get(
             app_label='party', model='party')
@@ -337,7 +338,8 @@ class AttributeFormMixinTest(UserTestCase, FileStorageTestCase, TestCase):
 class AttributeFormBaseTest(UserTestCase, FileStorageTestCase, TestCase):
 
     def setUp(self):
-        self.project = ProjectFactory.create(current_questionnaire='abc1')
+        self.project = ProjectFactory.create()
+        q_factories.QuestionnaireFactory.create(project=self.project)
 
         content_type = ContentType.objects.get(
             app_label='party', model='party')

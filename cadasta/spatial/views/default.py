@@ -85,7 +85,7 @@ class LocationDetail(LoginPermissionRequiredMixin,
             try:
                 question = Question.objects.get(
                     name='location_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 context['type_labels'] = template_xlang_labels(
                     question.label_xlat)
             except Question.DoesNotExist:
@@ -103,7 +103,7 @@ class LocationDetail(LoginPermissionRequiredMixin,
             try:
                 tenure_type = Question.objects.get(
                     name='tenure_type',
-                    questionnaire_id=project.current_questionnaire)
+                    questionnaire=project.current_questionnaire)
                 tenure_opts = QuestionOption.objects.filter(
                     question=tenure_type)
                 tenure_opts = dict(tenure_opts.values_list(

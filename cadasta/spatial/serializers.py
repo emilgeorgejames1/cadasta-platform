@@ -24,9 +24,9 @@ class SpatialUnitSerializer(core_serializers.JSONAttrsSerializer,
 
     def validate_type(self, value):
         prj = self.context['project']
-        allowed_types = get_types('location_type',
-                                  TYPE_CHOICES,
-                                  questionnaire_id=prj.current_questionnaire)
+        allowed_types = get_types(
+            'location_type', TYPE_CHOICES,
+            questionnaire_id=prj.current_questionnaire.id)
 
         if value not in allowed_types:
             msg = "'{}' is not a valid choice for field 'type'."

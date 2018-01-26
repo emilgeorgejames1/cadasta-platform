@@ -59,7 +59,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         assert schema is not None
         assert schema.selectors == [
             project.organization.pk, project.pk,
-            project.current_questionnaire, party.type]
+            project.current_questionnaire.id, party.type]
         assert 'homeowner' in party.attributes.attributes
         assert 'dob' in party.attributes.attributes
         assert 'gender' in party.attributes.attributes
@@ -120,7 +120,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         schema = Schema.objects.get(content_type=content_type)
         assert schema is not None
         assert schema.selectors == [
-            project.organization.pk, project.pk, project.current_questionnaire]
+            project.organization.pk, project.pk, project.current_questionnaire.id]
         assert 'quality' in spatial_unit.attributes.attributes
         assert 'polygon_high' == spatial_unit.attributes['quality']
         assert 'infrastructure' in spatial_unit.attributes.attributes
@@ -163,7 +163,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         schema = Schema.objects.get(content_type=content_type)
         assert schema is not None
         assert schema.selectors == [
-            project.organization.pk, project.pk, project.current_questionnaire]
+            project.organization.pk, project.pk, project.current_questionnaire.id]
         assert 'notes' in sur.attributes.attributes
 
     def test_spatial_relationship_invalid_attribute(self):
@@ -201,7 +201,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         schema = Schema.objects.get(content_type=content_type)
         assert schema is not None
         assert schema.selectors == [
-            project.organization.pk, project.pk, project.current_questionnaire]
+            project.organization.pk, project.pk, project.current_questionnaire.id]
         assert 'notes' in pr.attributes.attributes
 
     def test_party_relationship_invalid_attribute(self):
@@ -239,7 +239,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         schema = Schema.objects.get(content_type=content_type)
         assert schema is not None
         assert schema.selectors == [
-            project.organization.pk, project.pk, project.current_questionnaire]
+            project.organization.pk, project.pk, project.current_questionnaire.id]
         assert 'notes' in tr.attributes.attributes
 
     def test_tenure_relationship_invalid_attribute(self):
@@ -350,7 +350,7 @@ class CreateAttributeSchemaTest(UserTestCase, FileStorageTestCase, TestCase):
         s2 = Schema.objects.get(
             content_type=content_type, selectors=(
                 project.organization.pk, project.pk,
-                project.current_questionnaire)
+                project.current_questionnaire.id)
         )
         assert s2 is not None
         assert s1 != s2
@@ -383,7 +383,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
             content_type=self.content_type,
             selectors=(
                 self.project.organization.pk, self.project.pk,
-                self.project.current_questionnaire
+                self.project.current_questionnaire.id
             )
         )
         assert 1 == schemas.count()
@@ -393,7 +393,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
             content_type=self.content_type,
             selectors=(
                 self.project.organization.pk, self.project.pk,
-                self.project.current_questionnaire, 'IN'
+                self.project.current_questionnaire.id, 'IN'
             )
         )
         assert 1 == schemas.count()
@@ -403,7 +403,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
             content_type=self.content_type,
             selectors=(
                 self.project.organization.pk, self.project.pk,
-                self.project.current_questionnaire, 'GR'
+                self.project.current_questionnaire.id, 'GR'
             )
         )
         assert 1 == schemas.count()
@@ -413,7 +413,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
         schema = Schema.objects.get(
             content_type=self.content_type,
             selectors=(self.project.organization.pk, self.project.pk,
-                       self.project.current_questionnaire)
+                       self.project.current_questionnaire.id)
         )
         assert schema is not None
         assert 1 == schema.attributes.count()
@@ -431,7 +431,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
         schema = Schema.objects.get(
             content_type=self.content_type,
             selectors=(self.project.organization.pk, self.project.pk,
-                       self.project.current_questionnaire, 'IN')
+                       self.project.current_questionnaire.id, 'IN')
         )
         assert schema is not None
         assert 3 == schema.attributes.count()
@@ -456,7 +456,7 @@ class ConditionalAttributeSchemaTest(UserTestCase, FileStorageTestCase,
         schema = Schema.objects.get(
             content_type=self.content_type,
             selectors=(self.project.organization.pk, self.project.pk,
-                       self.project.current_questionnaire, 'GR')
+                       self.project.current_questionnaire.id, 'GR')
         )
         assert schema is not None
         assert 2 == schema.attributes.count()

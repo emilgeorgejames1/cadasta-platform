@@ -125,7 +125,7 @@ class SpatialUnit(ResourceModelMixin, RandomIDModel):
             return dict(TYPE_CHOICES)[self.type]
 
         question = Question.objects.get(
-            questionnaire_id=self.project.current_questionnaire,
+            questionnaire=self.project.current_questionnaire,
             name='location_type'
         )
         label = question.options.get(name=self.type).label_xlat

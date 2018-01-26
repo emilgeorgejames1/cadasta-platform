@@ -50,11 +50,10 @@ class XFormModelHelperTest(TestCase):
         loadattrtypes.Command().handle(force=True)
 
         self.user = UserFactory.create()
-        self.project = ProjectFactory.create(
-            current_questionnaire='a1')
-
         self.questionnaire = QuestionnaireFactory.create(
-            id_string='a1', version=0, project=self.project, id='a1')
+        id_string='a1', version=0, id='a1')
+        self.project = ProjectFactory.create(
+            current_questionnaire=self.questionnaire)
         QuestionFactory.create(
             name='location_geometry',
             label='Location of Parcel',
