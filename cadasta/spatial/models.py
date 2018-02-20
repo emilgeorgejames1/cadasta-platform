@@ -2,6 +2,7 @@ from core.models import RandomIDModel
 from django.core.urlresolvers import reverse
 from django.contrib.gis.db.models import GeometryField
 from django.db import models
+
 from django.utils.translation import ugettext as _
 from django.utils.encoding import iri_to_uri
 from django.dispatch import receiver
@@ -17,7 +18,32 @@ from .choices import TYPE_CHOICES
 from resources.mixins import ResourceModelMixin
 from jsonattrs.fields import JSONAttributeField
 from jsonattrs.decorators import fix_model_for_attributes
-from questionnaires.models import Question, Questionnaire
+from questionnaires.models import Questionnaire, QuestionOption
+
+
+_LOCATION_TYPE_KEY = '_location_type'
+
+
+class SpatialUnitQuerySet(models.QuerySet):
+    def with_labels(self):
+        """
+        Helper to annotate each SpatialUnit in the queryset with its related
+        label. Be forewarned, this is an expensive operation and should only
+        be run on smaller querysets
+        """
+        rel_questionnaire = models.OuterRef('project__current_questionnaire')
+        questionopt_qs = QuestionOption.objects.filter(**{
+            "question__questionnaire_id": rel_questionnaire,
+            "name": models.OuterRef('type')
+        })
+        labels_query = questionopt_qs.values('label_xlat')
+        annotation = {_LOCATION_TYPE_KEY: models.Subquery(labels_query)}
+        return self.annotate(**annotation)
+
+
+class SpatialUnitManager(models.Manager):
+    def get_queryset(self):
+        return SpatialUnitQuerySet(self.model, using=self._db)
 
 
 @fix_model_for_attributes
@@ -61,8 +87,7 @@ class SpatialUnit(ResourceModelMixin, RandomIDModel):
     last_updated = models.DateTimeField(auto_now=True)
 
     history = HistoricalRecords()
-
-    _LOCATION_TYPE_KEY = '_location_type'
+    objects = SpatialUnitManager()
 
     class Meta:
         ordering = ('type',)
@@ -125,16 +150,13 @@ class SpatialUnit(ResourceModelMixin, RandomIDModel):
         if not self.project.current_questionnaire:
             return dict(TYPE_CHOICES)[self.type]
 
-        if not hasattr(self, self._LOCATION_TYPE_KEY):
-            question = Question.objects.get(
-                questionnaire_id=self.project.current_questionnaire,
-                name='location_type'
-            )
-            setattr(
-                self, self._LOCATION_TYPE_KEY,
-                question.options.get(name=self.type).label_xlat)
+        if not hasattr(self, _LOCATION_TYPE_KEY):
+            option = QuestionOption.objects.get(
+                name=self.type, question__name='location_type',
+                question__questionnaire__id=self.project.current_questionnaire)
+            setattr(self, _LOCATION_TYPE_KEY, option.label_xlat)
 
-        label = getattr(self, self._LOCATION_TYPE_KEY)
+        label = getattr(self, _LOCATION_TYPE_KEY)
         if label is None or isinstance(label, str):
             return label
         else:

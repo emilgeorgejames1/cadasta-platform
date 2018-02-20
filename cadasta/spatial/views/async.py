@@ -1,9 +1,6 @@
-from django.db.models import OuterRef, Subquery
 from tutelary.mixins import APIPermissionRequiredMixin
 from rest_framework import generics
 from rest_framework_gis.pagination import GeoJsonPagination
-
-from questionnaires.models import QuestionOption
 
 from . import mixins
 from .. import serializers
@@ -19,17 +16,7 @@ class SpatialUnitDjangoPaginator(Paginator):
         # Here we are adding annotation after the page is selected. This helps
         # us avoid the burden of the annotation's lookup clauses when we are
         # doing the COUNT() operation needed to create the page.
-        annotation = {
-            # Prefetch the location type name
-            page.object_list.model._LOCATION_TYPE_KEY: Subquery(
-                QuestionOption.objects.filter(
-                    question__questionnaire_id=OuterRef(
-                        'project__current_questionnaire'),
-                    name=OuterRef('type')
-                ).values('label_xlat')
-            )
-        }
-        page.object_list = page.object_list.annotate(**annotation)
+        page.object_list = page.object_list.with_labels()
         return page
 
 
