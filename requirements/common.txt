@@ -38,7 +38,7 @@ requests==2.18.4
 pyparsing==2.2.0
 django-compressor==2.2
 beautifulsoup4==4.6.0
-gpxpy==1.1.2
+gpxpy==1.2.0
 django-otp==0.4.3
 twilio==6.10.5
 phonenumbers==8.9.1
